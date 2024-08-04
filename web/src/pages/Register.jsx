@@ -178,6 +178,7 @@ const Register = ({ register, errors }) => {
                       setFieldTouched("type", true, false);
                     }}
                   >
+                    <option value="">-- select --</option>
                     <option value="Seller">Seller</option>
                     <option value="Customer">Customer</option>
                   </select>

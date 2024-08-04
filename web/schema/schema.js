@@ -14,5 +14,11 @@ export const registerFormSchema = object().shape({
   retype_password: string()
     .oneOf([ref("password"), null], "Passwords must match")
     .required("Password field required"),
-  type: string().required("Type field required"),
+  type: string().required("Please selecrt a type"),
+});
+
+export const updateFormSchema = object().shape({
+  name: string().required("Name field required"),
+  email: string().email().required("Email field required"),
+  type: string().required("Please select a typw"),
 });
