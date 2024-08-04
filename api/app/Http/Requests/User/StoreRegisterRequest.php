@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\User;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreRegisterRequest extends FormRequest
 {
@@ -27,5 +29,18 @@ class StoreRegisterRequest extends FormRequest
             'password' => 'required|string',
             'type' => 'required|string'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        if(! is_scalar($validator->errors()->messages())) {
+            $message = array_map('current', $validator->errors()->messages());
+        }
+
+        throw new HttpResponseException(response()->json([
+            'status' => false,
+            'message' => 'Validation failed',
+            'errors' => $message ?? $validator->errors()
+        ], 422));
     }
 }

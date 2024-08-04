@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\User\StoreRegisterRequest;
 
 class AuthController extends Controller
 {
-    public function register()
+    public function register(StoreRegisterRequest $request)
     {
         
     }
