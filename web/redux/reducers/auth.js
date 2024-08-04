@@ -4,6 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  UPDATE_USER,
 } from "../actions/types";
 
 const initialState = {
@@ -17,6 +18,7 @@ const authReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case UPDATE_USER:
     case USER_LOADED:
       return {
         ...state,

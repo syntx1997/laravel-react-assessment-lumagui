@@ -3,8 +3,8 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   LOGOUT,
+  UPDATE_USER,
 } from "./types";
 import setAuthToken from "../../src/utils/setAuthToken";
 import { setAlert, removeAlerts } from "./alert";
@@ -60,11 +60,42 @@ export const login = (formData) => async (dispatch) => {
 // Sign Up User
 export const signUp = (formData) => async (dispatch) => {
   try {
-    const res = await api.post("auth/register", formData);
+    const res = await api.post("/auth/register", formData);
     const result = res?.data?.result;
 
     dispatch({
       type: REGISTER_SUCCESS,
+      payload: result?.data,
+    });
+
+    dispatch(removeErrors());
+
+    dispatch(setAlert(result?.message, "success", 60000));
+  } catch (err) {
+    const error = err.response.data;
+
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+
+    if (error.data === null) {
+      dispatch(setAlert(error.message, "error"));
+    }
+
+    if (error.data !== null) {
+      dispatch(setErrors(error.data));
+    }
+  }
+};
+
+// Update User
+export const update = (formData) => async (dispatch) => {
+  try {
+    const res = await api.put("/user/update", formData);
+    const result = res?.data?.result;
+
+    dispatch({
+      type: UPDATE_USER,
       payload: result?.data,
     });
 
