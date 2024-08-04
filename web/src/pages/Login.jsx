@@ -1,3 +1,8 @@
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { login } from "../../redux/actions/auth";
+import { Formik } from "formik";
+
 const Login = () => {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
