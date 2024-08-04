@@ -11,5 +11,5 @@ Route::prefix('/auth')->controller(AuthController::class)->group(function () {
 
 Route::prefix('/user')->controller(UserController::class)->group(function () {
     Route::get('/get', 'get')->middleware('auth:sanctum');
-    Route::put('/update', 'update');
+    Route::put('/update', 'update')->middleware('auth:sanctum');
 });
