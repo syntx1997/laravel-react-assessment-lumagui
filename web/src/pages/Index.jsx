@@ -23,6 +23,12 @@ const Index = ({ update, errors, user }) => {
   };
 
   useEffect(() => {
+    formikRef.current.setFieldValue("name", user?.name);
+    formikRef.current.setFieldValue("email", user?.email);
+    formikRef.current.setFieldValue("type", user?.type);
+  }, [user]);
+
+  useEffect(() => {
     if (errors) formikRef.current.setErrors(errors);
   }, [errors]);
 
