@@ -11,7 +11,7 @@ export const registerFormSchema = object().shape({
   name: string().required("Name field required"),
   email: string().email().required("Email field required"),
   password: string().required("Password field required"),
-  re_Typepassword: string()
+  retype_password: string()
     .oneOf([ref("password"), null], "Passwords must match")
     .required("Password field required"),
   type: string().required("Type field required"),

@@ -5,9 +5,10 @@ import { login } from "../../redux/actions/auth";
 import { Formik, Form, ErrorMessage } from "formik";
 import { loginFormSchema } from "../../schema/schema";
 import Alert from "../components/Alert";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ login, errors }) => {
+  const navigate = useNavigate();
   const formikRef = useRef(null);
 
   const initialValues = {
@@ -19,7 +20,7 @@ const Login = ({ login, errors }) => {
     const succeed = await login(values);
 
     if (succeed) {
-      return <Navigate to="/" />;
+      navigate("/");
     }
 
     setSubmitting(false);
@@ -112,10 +113,11 @@ const Login = ({ login, errors }) => {
 
               <div>
                 <button
+                  disabled={isSubmitting}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  {isSubmitting ? "Logging In..." : "Login"}
                 </button>
               </div>
             </Form>
