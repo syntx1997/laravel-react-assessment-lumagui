@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Libraries\PassCrypt;
 use App\Models\User;
 use App\Services\Traits\APIResponseTrait;
 use Illuminate\Http\JsonResponse;
@@ -19,22 +20,20 @@ class AuthService {
 
     public function register(array $params): JsonResponse
     {
+        $params['password'] = PassCrypt::encrypt($this->salt, $params['password']);
         $user = User::create($params);
 
         return $this->success('Successfully registered', $user, Response::HTTP_OK);
     }
 
-    public function login(array $params): JsonResponse
+    public function login(array $params)
     {
-        $hashedPassword = bcrypt($params['password']);
+        $user = User::where('email', $params['email'])->first();
 
-        $user = User::where([
-            'email' => $params['email'],
-            'password' => $hashedPassword
-        ]);
+        $decryptPassword = PassCrypt::decrypt($this->salt, $user->password);
 
-        if(empty($user)) {
-            return $this->error('Username or password is incorrect', Response::HTTP_BAD_REQUEST);
+        if($decryptPassword != $params['password']) {
+            return $this->error('Password is incorrect', Response::HTTP_BAD_REQUEST);
         }
 
         // Generate Token
