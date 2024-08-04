@@ -4,7 +4,7 @@ const { string, number, object, array, boolean, date, mixed, ref } = Yup;
 
 export const loginFormSchema = object().shape({
   email: string().email().required("Email field required"),
-  password: string().required("Password required"),
+  password: string().required("Password field required"),
 });
 
 export const registerFormSchema = object().shape({
@@ -13,6 +13,6 @@ export const registerFormSchema = object().shape({
   password: string().required("Password field required"),
   re_Typepassword: string()
     .oneOf([ref("password"), null], "Passwords must match")
-    .required("Password required"),
+    .required("Password field required"),
   type: string().required("Type field required"),
 });

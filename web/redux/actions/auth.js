@@ -46,6 +46,8 @@ export const login = (formData) => async (dispatch) => {
     dispatch(loadUser());
 
     dispatch(setAlert(result?.message, "success"));
+
+    return true;
   } catch (err) {
     const response = err?.response.data;
 
@@ -54,6 +56,8 @@ export const login = (formData) => async (dispatch) => {
     } else {
       dispatch(setAlert(response?.result?.message, "error"));
     }
+
+    return false;
   }
 };
 
@@ -71,6 +75,8 @@ export const signUp = (formData) => async (dispatch) => {
     dispatch(removeErrors());
 
     dispatch(setAlert(result?.message, "success", 60000));
+
+    return true;
   } catch (err) {
     const error = err.response.data;
 
@@ -85,6 +91,8 @@ export const signUp = (formData) => async (dispatch) => {
     if (error.data !== null) {
       dispatch(setErrors(error.data));
     }
+
+    return false;
   }
 };
 
@@ -102,6 +110,8 @@ export const update = (formData) => async (dispatch) => {
     dispatch(removeErrors());
 
     dispatch(setAlert(result?.message, "success", 60000));
+
+    return true;
   } catch (err) {
     const error = err.response.data;
 
@@ -116,6 +126,8 @@ export const update = (formData) => async (dispatch) => {
     if (error.data !== null) {
       dispatch(setErrors(error.data));
     }
+
+    return false;
   }
 };
 
